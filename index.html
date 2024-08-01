@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marksheet</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function addMarks(theoryId, internalId, totalId) {
+            var theoryMark = parseFloat(document.getElementById(theoryId).value) || 0;
+            var internalMark = parseFloat(document.getElementById(internalId).value) || 0;
+
+            var total = theoryMark + internalMark;
+
+            document.getElementById(totalId).textContent = total;
+
+            updateGrandTotalAndPercentage();
+        }
+
+        function updateGrandTotalAndPercentage() {
+            var totalCells = document.querySelectorAll('.total-cell');
+            var grandTotal = 0;
+            totalCells.forEach(function(cell) {
+                grandTotal += parseFloat(cell.textContent) || 0;
+            });
+
+            document.getElementById('grand-total').textContent = grandTotal;
+            
+            document.getElementById('grand-total-words').textContent = numberToWords(grandTotal).toUpperCase();
+
+            var percentage = (grandTotal / (totalCells.length * 100)) * 100;
+            document.getElementById('percentage').textContent = percentage.toFixed(1);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.theory-input').forEach(function(input) {
+                input.addEventListener('input', function() {
+                    var row = this.closest('tr');
+                    var theoryId = row.querySelector('.theory-input').id;
+                    var internalId = row.querySelector('.internal-input').id;
+                    var totalId = row.querySelector('.total-cell').id;
+                    addMarks(theoryId, internalId, totalId);
+                });
+            });
+
+            document.querySelectorAll('.internal-input').forEach(function(input) {
+                input.addEventListener('input', function() {
+                    var row = this.closest('tr');
+                    var theoryId = row.querySelector('.theory-input').id;
+                    var internalId = row.querySelector('.internal-input').id;
+                    var totalId = row.querySelector('.total-cell').id;
+                    addMarks(theoryId, internalId, totalId);
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h4>Sl.No:00000000</h4>
+        <img class="logo" src="logo.png" height="105px" width="105px">
+        <img class="qr" src="qrcode.png" height="80px" width="80px">
+    </div>
+    <div class="content">
+        <h1>Hindusthan College of Engineering and Technology</h1>
+        <h2>(An autonomous institution)<br>Approved by AICTE Affilated to Anna University</h2>
+        <h3>Annual State Marksheet</h3>
+        <table class="details">
+            <tr>
+                <th>
+                    <h5>Name of Candidate</h5>
+                    <p class="name">SHAHUL MEERAN U</p>
+                </th>
+                <th>
+                    <h5>Course Name with code</h5>
+                    <p class="course">COMPUTER SCIENCE ENGINEERING</p>
+                </th>
+            </tr>
+        </table>
+        <table class="enter">
+            <tr>
+                <th>
+                    <h5>Reg.No</h5>
+                    <p>720721104166</p>
+                </th>
+                <th>
+                    <h5>Center of Studying</h5>
+                    <p>HINDUSTHAN COLLEGE OF ENGINEERING AND TECHNOLOGY</p>
+                </th>
+            </tr>
+        </table>
+        <table class="marks">
+            <tr>
+                <th class="marksheets"><h5>Subject Code</h5></th>
+                <th class="marksheets"><h5>Subject Name</h5></th>
+                <th class="maxmark"><h5>Maxmark</h5></th>
+                <th class="theory"><h5>Theory</h5></th>
+                <th class="int"><h5>Internal</h5></th>
+                <th class="total"><h5>TOTAL</h5></th>
+                <th><h5>TOTAL IN WORDS</h5></th>
+            </tr>
+            <tr>
+                <td>21CS7001</td>
+                <td>COMPUTER DESIGN</td>
+                <td>100</td>
+                <td><input type="number" id="theo1" class="theory-input"></td>
+                <td><input type="number" id="internal1" class="internal-input"></td>
+                <td id="total1" class="total-cell"></td>
+                <td>NINE ZERO</td>
+            </tr>
+            <tr>
+                <td>21CS7002</td>
+                <td>WEB DESIGN</td>
+                <td>100</td>
+                <td><input type="number" id="theo2" class="theory-input"></td>
+                <td><input type="number" id="internal2" class="internal-input"></td>
+                <td id="total2" class="total-cell"></td>
+                <td>NINE FIVE</td>
+            </tr>
+            <tr>
+                <td>21CS7003</td>
+                <td>CYBER SECURITY</td>
+                <td>100</td>
+                <td><input type="number" id="theo3" class="theory-input"></td>
+                <td><input type="number" id="internal3" class="internal-input"></td>
+                <td id="total3" class="total-cell"></td>
+                <td>NINE ONE</td>
+            </tr>
+            <tr>
+                <td>21CS7251</td>
+                <td>BIG DATA PRACTICAL</td>
+                <td>100</td>
+                <td><input type="number" id="theo4" class="theory-input"></td>
+                <td><input type="number" id="internal4" class="internal-input"></td>
+                <td id="total4" class="total-cell"></td>
+                <td>EIGHT EIGHT</td>
+            </tr>
+            <tr>
+                <td>21CS7235</td>
+                <td>DSA PRACTICAL</td>
+                <td>100</td>
+                <td><input type="number" id="theo5" class="theory-input"></td>
+                <td><input type="number" id="internal5" class="internal-input"></td>
+                <td id="total5" class="total-cell"></td>
+                <td>NINE SEVEN</td>
+            </tr>
+        </table><br>
+        <div class="display">
+            GRAND TOTAL: <span id="grand-total">0</span> <br><br>
+            GRAND TOTAL IN WORDS: FOUR SIX ONE
+        </div>
+        <table class="info">
+            <tr>
+                <th>Month and year of exam</th>
+                <th>Number of subject offered</th>
+                <th>Result</th>
+                <th>Percentage</th>
+                <th>Grade</th>
+            </tr>
+            <tr>
+                <td>2024 Aug</td>
+                <td>3T+2P=5</td>
+                <td>PASS</td>
+                <td>92.1</td>
+                <td>A+</td>
+            </tr>
+        </table><br><br><br><br><br>
+        <div class="date">Date of Result: 01.08.2024</div>
+        <div class="sign">Deputy Controller of Examination</div><br>
+         <h5 class="college">HINDUSTHAN COLLEGE OF ENGINEERING AND TECHNOLOGY</h5>
+    </div>
+</body>
+</html>
